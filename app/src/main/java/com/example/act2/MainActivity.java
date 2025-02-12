@@ -9,12 +9,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
+
+    EditText nameTextField;
+    Button okButton;
+    TextView outputLabel;
+    Button quitButton;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +35,15 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        EditText nameTextField = findViewById(R.id.nameTextField);
-        Button okButton = findViewById(R.id.okButton);
-        TextView outputLabel = findViewById(R.id.outputLabel);
-        Button quitButton = findViewById(R.id.quitButton);
+
+        nameTextField = findViewById(R.id.nameTextField);
+        okButton = findViewById(R.id.okButton);
+        outputLabel = findViewById(R.id.outputLabel);
+        quitButton = findViewById(R.id.quitButton);
+
+
+
+
 
         //Makes sure the label doesn't have any text after the view loads
         outputLabel.setText("");
@@ -65,6 +78,20 @@ public class MainActivity extends AppCompatActivity {
 
         //Button to quit the app
         quitButton.setOnClickListener(view -> finish());
+
+    }
+
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putString("Message", nameTextField.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        outputLabel.setText(savedInstanceState.getString("Message"));
 
     }
 }
